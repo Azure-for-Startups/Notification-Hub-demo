@@ -57,7 +57,7 @@ We are considering two actors (Subscriber and Publisher) and three major use cas
 -   *Subscriber*: Receives notification and reads message
 -   *Subscriber* receives push notification message in standard format for their specific mobile platform and can read the text message delivered.
 
-<img src="media/image4.png" width="352" height="644" />
+<img src="media/image4.png" width="176" height="322" />
 
 ##COMPONENTS AND IMPLEMENTATION DETAILS
 
@@ -659,7 +659,7 @@ Note. User information is stored into the tag content as a json containing requi
             await dialog.ShowAsync();
         }
 
-      -   Replace <HUB-NAME> and <HUB-LISTEN-CONNECTION_STRING> with settings for your notification hub.
+-   Replace 'HUB-NAME' and 'HUB-LISTEN-CONNECTION_STRING' with settings for your notification hub.
 -   Double check Toast capable is enabled in the appmanifest.
 -   Build and run an application on the Device or the Windows Phone Emulator.
 
@@ -671,33 +671,33 @@ Note. User information is stored into the tag content as a json containing requi
 <img src="media/image18.png" width="145" height="265" />
 
 ###Android Client
--   Official Notification Hub documentation for Android platform is available here: <https://azure.microsoft.com/en-us/documentation/articles/notification-hubs-android-get-started/>
+
+-  Official Notification Hub documentation for Android platform is available here:<https://azure.microsoft.com/en-us/documentation/articles/notification-hubs-android-get-started/>
 -   Class *UserInfo* handles device registration data and  very similar to the one described in the Windows Phone section. Device registration is performed in a body of AsyncTask:
 
-private void registerPushNotification() {
-  private final String SENDER_ID = "<Your project number>";
-  private final String HubName = "<Your hub name>";
-  private final String HubListenConnectionString = "<Your default listenconnection sctring>";
-  final UserInfo userInfo = new UserInfo();
-  userInfo.setName(_nameEditText.getText().toString());
+          private final String SENDER_ID = "<Your project number>";
+                  private final String HubName = "<Your hub name>";
+                  private final String HubListenConnectionString = "<Your default listenconnection sctring>";
+                  final UserInfo userInfo = new UserInfo();
+                  userInfo.setName(_nameEditText.getText().toString());
 
-  new AsyncTask() {
-    @Override
-    protected Object doInBackground(Object... params) {
-      try {
-        GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(MainActivity.this);
-        String regid = gcm.register(SENDER_ID);
-        NotificationHub hub = new NotificationHub(HubName, HubListenConnectionString, MainActivity.this);
-        String registrationId = hub.register(regid, userInfo.getAsTag()).getRegistrationId();
-        ToastNotify("Registered Successfully - RegId : " + registrationId);
-      } catch (Exception e) {
-        ToastNotify("Registration Exception Message - " + e.getMessage());
-        return e;
-      }
-      return null;
-    }
-  }.execute(null, null, null);
-}
+                  new AsyncTask() {
+                    @Override
+                    protected Object doInBackground(Object... params) {
+                      try {
+                        GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(MainActivity.this);
+                        String regid = gcm.register(SENDER_ID);
+                        NotificationHub hub = new NotificationHub(HubName, HubListenConnectionString, MainActivity.this);
+                        String registrationId = hub.register(regid, userInfo.getAsTag()).getRegistrationId();
+                        ToastNotify("Registered Successfully - RegId : " + registrationId);
+                      } catch (Exception e) {
+                        ToastNotify("Registration Exception Message - " + e.getMessage());
+                        return e;
+                      }
+                      return null;
+                    }
+                  }.execute(null, null, null);
+                }
 
 <img src="media/image19.png" width="387" height="316" />
 
@@ -709,26 +709,27 @@ Class *UserInfo* handles device registration data and is very similar to the one
 
 -   Register to receive remote notifications via Apple Push Notification service.
 
-    (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *) deviceToken {
-    static NSString* hubName = @"<Your hub name>";
-    static NSString* listenConnectionString = @""<Your default listenconnection sctring>";
+        -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *) 
+        deviceToken {
+            static NSString* hubName = @"<Your hub name>";
+            static NSString* listenConnectionString = @""<Your default listenconnection sctring>";
 
-    SBNotificationHub* hub = [[SBNotificationHub alloc] initWithConnectionString:listenConnectionString
-                                                             notificationHubPath:hubName];
-    NSSet* tags = nil;
-    if (self.userInfo) {
-        tags = [NSSet setWithObjects:self.userInfo.asTag, nil];
-    }
+            SBNotificationHub* hub = [[SBNotificationHub alloc] initWithConnectionString:listenConnectionString
+                                                                     notificationHubPath:hubName];
+            NSSet* tags = nil;
+            if (self.userInfo) {
+                tags = [NSSet setWithObjects:self.userInfo.asTag, nil];
+            }
     
-    [hub registerNativeWithDeviceToken:deviceToken tags:tags completion:^(NSError* error) {
-        if (error != nil) {
-            NSLog(@"Error registering for notifications: %@", error);
+            [hub registerNativeWithDeviceToken:deviceToken tags:tags completion:^(NSError* error) {
+                if (error != nil) {
+                    NSLog(@"Error registering for notifications: %@", error);
+                }
+                else {
+                    [self MessageBox:@"Registration Status" message:@"Registered"];
+                }
+            }]
         }
-        else {
-            [self MessageBox:@"Registration Status" message:@"Registered"];
-        }
-    }];
-}
 
 <img src="media/image20.png" width="436" height="298" />
 
