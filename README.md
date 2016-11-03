@@ -3,7 +3,7 @@
 
 This article illustrates how to use the Azure Notification Hub to deliver push notification messages to mobile applications on iOS, Android and Windows Phone platforms. This article is also available in PDF format [here] (media/NotificationHub_Azure_sample.pdf).
 
-Please feel free to fork the code base for your purpose and if you have any feedback on the demo code or documentation please log an [issue] (https://github.com/Azure-for-Startups/Azure-IoT-demo/issues) and note what document or code base section the feedback is related to.
+Please feel free to fork the code base for your purpose and if you have any feedback on the demo code or documentation please log an [issue] (https://github.com/Azure-for-Startups/Notification-Hub-demo/issues) and note what document or code base section the feedback is related to.
 
 ##INTRODUCTION
 
